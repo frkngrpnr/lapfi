@@ -1,6 +1,5 @@
 % This file reads the extracted features, optimizes the model and produces
 % the test set estimations.
-% For the full pipeline, see main.m
 
 % In order to include the validation set labels, you need to have
 % gt_val.mat in data folder, which can be obtained like this:
@@ -51,13 +50,12 @@ if opts.extract_features
     vd19 = LAPFI_extract_scene_features(opts.video_path, [opts.frame_features_path bss 'vd19'], 'CNN_VGGVD19', 39, net);
     vd19 = LAPFI_attach_labels(vd19);
 else % load features
-    if ~(exist('vggfer33fun','var') && exist('lgbptop', 'var') && exist('vd19', 'var'))
+    if ~(exist('vggfer33fun','var') && exist('lgbptop', 'var') && exist('vd19', 'var')) && exist('is13', 'var'))
         disp('Loading features..');
         load('vggfer33fun'); % face feature
         load('lgbptop'); % face feature
         load('vd19'); % scene feature
-        load('is13'); % audio feature
-        
+        load('is13'); % audio feature        
     end
 end
 %% 3. Optimize the models and estimate test labels
@@ -94,7 +92,6 @@ pred.pred_filename = output_test_face.ordered.filename;
 for li=1:5    
     pred.predset{li} = 0.75 * output_test_face.ordered.pred(:,li) + 0.25 * output_test_scene.ordered.pred(:,li);    
 end
-pred2 = pred; % sil
 li = find(strcmp(pred.labelnames, 'ValueAgreeableness'));
 pred.predset{li} = 0.504*output_test_cnn.ordered.pred(:,li) + 0.393*output_test_lgbptop.ordered.pred(:,li) + 0.095*output_test_scene.ordered.pred(:,li) + 0.008*output_test_audio.ordered.pred(:,li);
 LAPFI_write_predictions_test(pred, outpath_test, example_file_test);

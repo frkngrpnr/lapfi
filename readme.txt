@@ -11,6 +11,8 @@ Then the code will try to load('gt_val.mat'), and if succeeds, will use the whol
 3) To avoid conflict of interest, we didn't include third party tools and pre-trained models used for face detection and (partly) in feature extraction. We, however, indicated the necessary pointers and links for these external resources
 For face alignment, you need the IntraFace library. For feature extraction, you need VLFeat (available at http://www.vlfeat.org/download.html), MatConvNet (available at http://www.vlfeat.org/matconvnet/) and OpenSmile (available at http://audeering.com/research/opensmile/) libraries installed. For audio feature extraction, we use the IS13_ComParE.conf file.
 
+4) Since the features are too big to upload to GitHub, you can find them on the following Dropbox link: https://www.dropbox.com/sh/w6v4s78plwbnd82/AAA_H2-VUI4t2nEAQzbqPhSAa?dl=0. Please make sure you the .mat files are placed under the path ./data/features.
+
 The test set predictions will be created in ./data/output/test
 
 
